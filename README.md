@@ -20,7 +20,7 @@ Men's, women's and mixed team events are included.
 
 ## Planned features
 
-- [ ] Data model for athletes, events, Games and results
+- [ ] Data model for users, shooting results and competitions
 - [ ] Import results from CSV files
 - [ ] Export information to CSV files
 - [ ] Each athlete can manual entry of new results
@@ -29,15 +29,48 @@ Men's, women's and mixed team events are included.
 - [ ] Charts comparing athletes, competitions, ...
 - [ ] Search and filters (year, discipline, event, gender)
 
-## Data
+## Data model
 
-Each result record will contain at least:
+The first version of the data model is built around three main entities: **users**, **shooting results** and **competitions**.
 
-- Games (year and host city)
-- Discipline and event
-- Athlete and country
-- Phase (qualification / final)
-- Score and final rank
+### User
+
+Basic information about each club member using the platform:
+
+| Field | Required | Notes |
+|-------|----------|-------|
+| Name | Yes | |
+| Date of birth | Yes | |
+| Registration date | Yes | Date the user signed up on the platform |
+| Phone | No | |
+| Email | Yes | |
+
+### Shooting result
+
+Each result (series) shot by a user:
+
+| Field | Required | Notes |
+|-------|----------|-------|
+| User | Yes | Athlete who shot the series |
+| Location | Yes | Where the series was shot |
+| Event type | Yes | e.g. 10m Air Pistol, 25m Pistol, ... |
+| Score | Yes | Score obtained |
+| Competition | No | Competition in which the series was shot (official, friendly or training) |
+
+### Competition
+
+| Field | Required | Notes |
+|-------|----------|-------|
+| Name | Yes | |
+| Date | Yes | |
+| Location | Yes | |
+| Competition type | Yes | `official`, `friendly` or `training` |
+
+### Relationships
+
+- A **user** has many **shooting results**.
+- A **shooting result** may belong to one **competition**; a **competition** groups many shooting results (from one or more users).
+- A solo training session can be recorded either without a competition or under a competition of type `training`.
 
 ## Technology stack
 
